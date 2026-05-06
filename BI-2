@@ -1,0 +1,61 @@
+# ============================================================
+# ETL Process with Data Visualization
+# ============================================================
+
+# Step 1: Import Libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# ============================================================
+# Step 2: Extract Data
+# ============================================================
+
+# Create sample dataset
+data = {
+    "Employee": ["Amit", "Riya", "Karan", "Sneha", "Raj"],
+    "Department": ["IT", "HR", "IT", "Finance", "HR"],
+    "Salary": [50000, 40000, 60000, 55000, 45000]
+}
+
+# Convert into DataFrame
+df = pd.DataFrame(data)
+
+print("Extracted Data:")
+print(df)
+
+# ============================================================
+# Step 3: Transform Data
+# ============================================================
+
+# Increase salary by 10%
+df["Updated_Salary"] = df["Salary"] * 1.10
+
+# Remove null values if any
+df = df.dropna()
+
+print("\nTransformed Data:")
+print(df)
+
+# ============================================================
+# Step 4: Load Data
+# ============================================================
+
+# Save transformed data into CSV file
+df.to_csv("transformed_employee_data.csv", index=False)
+
+print("\nData Loaded Successfully into CSV File")
+
+# ============================================================
+# Step 5: Data Visualization
+# ============================================================
+
+# Create bar chart
+plt.bar(df["Employee"], df["Updated_Salary"])
+
+# Add title and labels
+plt.title("Employee Salary Visualization")
+plt.xlabel("Employee Name")
+plt.ylabel("Updated Salary")
+
+# Display graph
+plt.show()
