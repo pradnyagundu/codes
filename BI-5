@@ -1,0 +1,74 @@
+# Import libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Rainfall data
+rainfall = [799,1174.8,865.1,1334.6,635.4,
+            918.5,685.5,998.6,784.2,985,
+            882.8,1071]
+
+# Months
+months = list(range(1,13))
+
+# Create rainfall categories
+labels = []
+
+for r in rainfall:
+    if r < 800:
+        labels.append("Low")
+    elif r < 1000:
+        labels.append("Medium")
+    else:
+        labels.append("High")
+
+# Create DataFrame
+data = pd.DataFrame({
+    'Month': months,
+    'Rainfall': rainfall,
+    'Category': labels
+})
+
+print(data)
+
+plt.plot(months, rainfall)
+plt.show()
+
+# Features and Target
+X = data[['Month', 'Rainfall']]
+y = data['Category']
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Create Decision Tree model
+model = DecisionTreeClassifier(random_state=42)
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Prediction
+y_pred = model.predict(X_test)
+
+# Accuracy
+accuracy = accuracy_score(y_test, y_pred)
+
+print("\nPredictions:", y_pred)
+print("Accuracy:", accuracy)
+
+# Plot Decision Tree
+plt.figure(figsize=(10,6))
+
+# Draw the tree
+plot_tree(model, filled=True)
+
+# Show title
+plt.title("Decision Tree")
+
+# Display graph
+plt.show()
